@@ -1,5 +1,6 @@
+OPT=-O3
 CC=clang
-CFLAGS=-O3 --target=wasm32 -fvisibility=hidden
+CFLAGS=$(OPT) --target=wasm32 -fvisibility=hidden
 LFLAGS=-Wl,--import-memory,--no-entry,--strip-all,--export-dynamic,--allow-undefined-file=kmpc.syms -nostdlib
 
 OUTS=sequential.wasm omp-parallel.wasm omp-parallel-target.wasm
