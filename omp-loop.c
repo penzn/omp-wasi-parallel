@@ -3,7 +3,7 @@ void foo(float * bar, float * baz, unsigned N) {
 #ifdef _TARGET
   #pragma omp target
 #endif
-  #pragma omp parallel for schedule(static)
+  #pragma omp parallel for num_threads(N) schedule(static)
   for (unsigned i = 0; i < N; ++i) {
     bar[i] = baz[i] * 2;
   }
