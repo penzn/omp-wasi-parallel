@@ -10,11 +10,14 @@ int main(int argc, char ** argv) {
 
   if (num == 0) { // No multithreading
     printf("Hello world\n");
+    // Leave early to avoid falling into parallel section below
+    return 0;
   }
 
 #pragma omp parallel num_threads(num)
   {
     printf("Hello threaded world\n");
   }
+
   return 0;
 }

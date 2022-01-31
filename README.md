@@ -1,32 +1,48 @@
-OpenMP to WebAssembly compilation demo
-======================================
+OpenMP POC for wasi-parallel
+============================
 
-Wasm compilation for a sample OpenMP program, including `omp target`.
+Wasm compilation for a sample OpenMP program using [wasi-parallel][wp]. Has
+only been tested on Linux.
+
+[wp]: https://github.com/WebAssembly/wasi-parallel
 
 ## Prerequisites
 
-- Clang
+- [WASI-SDK](https://github.com/WebAssembly/wasi-sdk)
 - Make
+- [wasmtime with `wasi-parallel` support][aw], more on that below
 
-## The example
+[aw]: https://github.com/abrown/wasmtime/tree/wasi-parallel
 
-At the core it is this function
+## Building
 
-```C
-void foo(float * bar, float * baz, unsigned N) {
-  for (unsigned i = 0; i < N; ++i) {
-    bar[i] = baz[i] * 2;
-  }
-}
-```
+Install WASI-SDK and set relevant environment variables, in particular
+`WASI_SDK_PATH`. Makefile would use it to pick up the compiler and runtime
+libraries. Alternatively, pass `WASI_SDK_PATH` to Make directly.
 
-but [parallelized](omp-loop.c) two ways using OpenMP.
-
-## Building 
+In the default case:
 
 ```
 $ make
 ```
 
-This creates three Wasm binaries: sequential, host-only, and device. The latter
-two would contain calls to LLVM OpenMP runtime, which are declared imports.
+### Building wasmtime with wasi-parallel support
+
+Get the code at https://github.com/abrown/wasmtime/tree/wasi-parallel
+
+Install WASI-SDK, set recommended environment variables and also add its `bin`
+directory to the `PATH`.
+
+Add `--features wasi-parallel` to `cargo build`.
+
+## Running
+
+Enable `experimental-wasi-parallel` module in `wasmtime`.
+
+The example takes a command-line parameters indicating number of threads to
+execute. Passing zero would make it completely sequential, non-integer values
+would be treated as zero. For example, to run using four threads:
+
+```
+wasmtime --wasi-modules experimental-wasi-parallel omp-hello.wasm 4
+```

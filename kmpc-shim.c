@@ -80,7 +80,7 @@ void wasi_unwrapper(int thread_id, int num_threads, int block_size,
   // the argument array in
   if (inputs_size == 0) {
     ((void (*)(int*, int*))workers[0])(&thread_id, &thread_id);
-  else {
+  } else {
     ((void (*)(int*, int*, void**))workers[0])(&thread_id, &thread_id, inputs);
   }
 }
