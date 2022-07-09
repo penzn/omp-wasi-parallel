@@ -1,0 +1,7 @@
+__kmpc_fork_teams
+__kmpc_for_static_init_4u
+__kmpc_for_static_init_8
+__kmpc_fork_call
+__kmpc_for_static_fini
+__kmpc_for_static_init_4u
+__kmpc_for_static_fini
