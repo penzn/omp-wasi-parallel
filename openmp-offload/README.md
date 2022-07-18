@@ -5,7 +5,7 @@ Examples of single file OpenMP 'offload' to WebAssembly.
 
 - This requires a [change][c] to Clang to define Wasm as a valid offload target
   and also disable multi-stage compilations normally used for native host
-  targets
+  targets (also as a [branch][b] for potentially more up-do-date state)
 - Import OpenMP API into the module, wasi-parallel Wasm API does not define
   device offload functionality
 
@@ -20,4 +20,5 @@ To compile, first build modified Clang (apply [patch][c]), then run `make` with
 Clang on the path.
 
 [c]: https://github.com/penzn/llvm-project/commit/320765aebcaf86d2f949346ba3b96c565a726893
+[b]: https://github.com/penzn/llvm-project/tree/wasm-offload
 
